@@ -18,5 +18,11 @@ namespace FlmsStor.Controllers
             var allActors =await _service.GetAll();
             return View(allActors);
         }
+
+        //Get: Actors/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
