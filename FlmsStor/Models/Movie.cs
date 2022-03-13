@@ -1,4 +1,5 @@
-﻿using FlmsStor.Data.Enums;
+﻿using FlmsStor.Data.Base;
+using FlmsStor.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FlmsStor.Models
 {
-    public class Movie
+    public class Movie:IEntityBase
     {
         [Key]
         public int Id { get; set; }
