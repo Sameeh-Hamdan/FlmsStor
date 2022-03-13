@@ -60,8 +60,12 @@ namespace FlmsStor.Controllers
             {
                 return View(actor);
             }
-            await _service.UpdateAsync(id,actor);
-            return RedirectToAction(nameof(Index));
+            if (id == actor.Id)
+            {
+                await _service.UpdateAsync(id, actor);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(actor);
         }
 
         //Get: Actors/Delete/1
