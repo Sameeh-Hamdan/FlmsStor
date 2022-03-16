@@ -1,7 +1,9 @@
 using FlmsStor.Data;
+using FlmsStor.Data.Cart;
 using FlmsStor.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +37,11 @@ namespace FlmsStor
             services.AddScoped<ICinemasService, CinemasService>();
             services.AddScoped<IMoviesService, MoviesService>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+            services.AddSession();
+
             services.AddControllersWithViews();
         }
 
@@ -55,6 +62,7 @@ namespace FlmsStor
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
