@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlmsStor.Data.Cart
 {
@@ -80,5 +81,13 @@ namespace FlmsStor.Data.Cart
                 .Sum();
         }
         
+        public async Task ClearShoppingCartAsync()
+        {
+            var items =await _context.ShoppingCartItems
+                .Where(n => n.ShoppingCartId == ShoppingCartId).ToListAsync();
+
+            _context.ShoppingCartItems.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
     }
 }
