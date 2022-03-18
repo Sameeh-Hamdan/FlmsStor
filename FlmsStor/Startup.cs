@@ -75,6 +75,7 @@ namespace FlmsStor
             });
 
             AppDbInitializer.Seed(app);
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }
