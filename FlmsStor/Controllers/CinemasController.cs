@@ -1,6 +1,8 @@
 ﻿using FlmsStor.Data;
 using FlmsStor.Data.Services;
+using FlmsStor.Data.Static;
 using FlmsStor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace FlmsStor.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class CinemasController : Controller
     {
         private readonly ICinemasService _service;
@@ -15,6 +18,8 @@ namespace FlmsStor.Controllers
         {
             _service=service;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var allCinemas = await _service.GetAllAsync();
@@ -39,6 +44,7 @@ namespace FlmsStor.Controllers
         }
 
         //Get:Cinemas/Details/1
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var cinemaDetails = await _service.GetByIdAsync(id);

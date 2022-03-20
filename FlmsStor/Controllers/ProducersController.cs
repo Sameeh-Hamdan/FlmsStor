@@ -1,6 +1,8 @@
 ﻿using FlmsStor.Data;
 using FlmsStor.Data.Services;
+using FlmsStor.Data.Static;
 using FlmsStor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace FlmsStor.Controllers
 {
+    [Authorize(Roles =UserRoles.Admin)]
     public class ProducersController : Controller
     {
         private readonly IProducersService _service;
@@ -15,6 +18,8 @@ namespace FlmsStor.Controllers
         {
             _service = service;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var allProducers =await _service.GetAllAsync();
@@ -22,6 +27,7 @@ namespace FlmsStor.Controllers
         }
 
         //Get:Producers/Details/1
+        [AllowAnonymous]
         public async Task<IActionResult>Details(int id)
         {
             var producerDetails =await _service.GetByIdAsync(id);

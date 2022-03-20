@@ -353,7 +353,7 @@ namespace FlmsStor.Data
                         Email = adminUserEmail,
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(newAdminUser, "123456");
+                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
@@ -370,7 +370,7 @@ namespace FlmsStor.Data
                         Email = appUserEmail,
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(newAppUser, "123456");
+                    await userManager.CreateAsync(newAppUser, "Coding@1234?");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
             }

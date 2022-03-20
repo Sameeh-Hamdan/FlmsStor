@@ -1,10 +1,13 @@
 using FlmsStor.Data;
 using FlmsStor.Data.Cart;
 using FlmsStor.Data.Services;
+using FlmsStor.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +44,14 @@ namespace FlmsStor
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 
+            //Authentication and authorization
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddMemoryCache();
             services.AddSession();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
 
             services.AddControllersWithViews();
         }
@@ -65,7 +75,11 @@ namespace FlmsStor
             app.UseRouting();
             app.UseSession();
 
+            //Authentication & Authorization
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
