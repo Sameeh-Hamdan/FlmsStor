@@ -88,6 +88,8 @@ namespace FlmsStor.Data.Cart
 
             _context.ShoppingCartItems.RemoveRange(items);
             await _context.SaveChangesAsync();
+
+            ShoppingCartItems = new List<ShoppingCartItem>();
         }
     }
 }
